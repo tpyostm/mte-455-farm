@@ -33,6 +33,10 @@ public class CameraController : MonoBehaviour
     {
         MoveByKB();
         Zoom();
+        Rotate();
+
+        newRotation = transform.rotation;
+        rotationAmount = 1;
     }
 
     private void Zoom()
