@@ -1171,6 +1171,7 @@ GameObject:
   - component: {fileID: -2281357749914108044}
   - component: {fileID: -2557272042455525588}
   - component: {fileID: -6496452849748459848}
+  - component: {fileID: 7938421623644890063}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -1235,8 +1236,8 @@ MonoBehaviour:
   charSkinID: 0
   charSkin:
   - {fileID: 1674885529865632, guid: 5384b0579aea21545b42e1e5bd2f4cc0, type: 3}
-  - {fileID: 1019791486663424, guid: 827a26e9b261b7847ac6cc3df54f2677, type: 3}
-  - {fileID: 1160220439793846, guid: 3c3a8236be548bb4c892cf39a5abadfe, type: 3}
+  - {fileID: 1974049927722618}
+  - {fileID: 1476073852342470}
   - {fileID: 1350103588185370, guid: 6a71738add6483c4e8a1479556240d54, type: 3}
   - {fileID: 1660164172697688, guid: a3981b0f4b9c4bb489dce3db59ee32b5, type: 3}
   charFaceID: 0
@@ -1287,6 +1288,18 @@ CapsuleCollider:
   m_Height: 2.3881638
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7938421623644890063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674885529865632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4edf4493091c12340b3c6913785e93a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1703637963276046
 GameObject:
   m_ObjectHideFlags: 0
