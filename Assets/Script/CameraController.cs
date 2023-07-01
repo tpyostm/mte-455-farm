@@ -83,7 +83,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
             newRotation *= Quaternion.Euler(Vector3.up * -rotationAmount);
 
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.Home))
             newRotation = Quaternion.identity;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * moveSpeed);
