@@ -1234,18 +1234,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charSkinID: 0
   charSkin:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1674885529865632, guid: 5384b0579aea21545b42e1e5bd2f4cc0, type: 3}
+  - {fileID: 1019791486663424, guid: 827a26e9b261b7847ac6cc3df54f2677, type: 3}
+  - {fileID: 1160220439793846, guid: 3c3a8236be548bb4c892cf39a5abadfe, type: 3}
+  - {fileID: 1350103588185370, guid: 6a71738add6483c4e8a1479556240d54, type: 3}
+  - {fileID: 1660164172697688, guid: a3981b0f4b9c4bb489dce3db59ee32b5, type: 3}
   charFaceID: 0
   charFacePic:
   - {fileID: 21300000, guid: 008c096030c64304ea07b3673217b1b3, type: 3}
   - {fileID: 21300000, guid: 7c128307c05040c479175b6a6ee8bb0c, type: 3}
   - {fileID: 21300000, guid: acf93464909037a4a846ae348d642e42, type: 3}
   - {fileID: 21300000, guid: 5146c870a8f62d347acb32f3060bbc2b, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 2942d20a73e665643994103232f8685b, type: 3}
   staffName: 
   dailyWage: 0
   staffGender: 0
@@ -1286,7 +1286,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2.3881638
   m_Direction: 1
-  m_Center: {x: 0, y: 0.6940819, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1703637963276046
 GameObject:
   m_ObjectHideFlags: 0
