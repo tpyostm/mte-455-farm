@@ -61,7 +61,6 @@ public class Office : MonoBehaviour
 
         workerObj.transform.parent = staffParent.transform;
 
-
         Worker w = workerObj.GetComponent<Worker>();
 
         w.Hired = true; //Hire this worker
@@ -72,7 +71,7 @@ public class Office : MonoBehaviour
         AddStaff(w);
 
         //Update UI
-        MainUI.instance.UpdateMoneyText(money);
+        MainUI.instance.UpdateResourceUI();
 
         return true;
     }
