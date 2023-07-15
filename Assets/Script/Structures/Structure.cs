@@ -34,4 +34,5 @@ public abstract class Structure : MonoBehaviour
         functional = false;
         hp = 1;
     }
+
 }
