@@ -1235,11 +1235,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charSkinID: 0
   charSkin:
-  - {fileID: 1674885529865632, guid: 5384b0579aea21545b42e1e5bd2f4cc0, type: 3}
+  - {fileID: 1719133026623802}
   - {fileID: 1974049927722618}
   - {fileID: 1476073852342470}
-  - {fileID: 1350103588185370, guid: 6a71738add6483c4e8a1479556240d54, type: 3}
-  - {fileID: 1660164172697688, guid: a3981b0f4b9c4bb489dce3db59ee32b5, type: 3}
+  - {fileID: 1723542237869448}
+  - {fileID: 1772410112290960}
   charFaceID: 0
   charFacePic:
   - {fileID: 21300000, guid: 008c096030c64304ea07b3673217b1b3, type: 3}
@@ -1252,6 +1252,7 @@ MonoBehaviour:
   staffGender: 0
   hired: 0
   state: 0
+  targetStructure: {fileID: 0}
 --- !u!195 &-2557272042455525588
 NavMeshAgent:
   m_ObjectHideFlags: 0

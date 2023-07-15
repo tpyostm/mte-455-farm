@@ -41,11 +41,11 @@ public class StaffCard : MonoBehaviour
         candidateName.text = s;
     }
 
-   /* public void Hire()
+   public void Hire()
     {
-  *//*      bool hired = Office.instance.ToHireStaff(LaborMarket.instance.LaborInMarket[id]);
+        bool hired = Office.instance.ToHireStaff(LaborMarket.instance.LaborInMarket[id]);
 
         if (hired)
-            gameObject.SetActive(false);*//*
-    }*/
+            gameObject.SetActive(false);
+    }
 }

@@ -15,6 +15,8 @@ public class MainUI : MonoBehaviour
 
     [SerializeField] private TMP_Text dayText;
 
+    public GameObject laborMarketPanel;
+
     public static MainUI instance;
 
     // Start is called before the first frame update
@@ -34,4 +36,14 @@ public class MainUI : MonoBehaviour
         milkText.text = Office.instance.Milk.ToString();
         appleText.text = Office.instance.Apple.ToString();
     }
+
+    public void ToggleLaborPanel()
+    {
+        if (!laborMarketPanel.activeInHierarchy)
+            laborMarketPanel.SetActive(true);
+        else
+            laborMarketPanel.SetActive(false);
+    }
+
+
 }
