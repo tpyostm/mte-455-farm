@@ -82,6 +82,56 @@ public class Office : MonoBehaviour
         dailyCostWages += w.DailyWage;
     }
 
+    public void UpdateAvailStaff()
+    {
+        availStaff = 0;
+
+        foreach (Worker w in workers)
+        {
+            if (w.TargetStructure == null) //there is no job to do
+                availStaff++;
+        }
+    }
+
+    public void SendStaff(GameObject target)
+    {
+        Farm f = target.GetComponent<Farm>();
+
+        int staffNeed = f.MaxStaffNum - f.CurrentWorkers.Count;
+        if (staffNeed <= 0)
+            return;
+
+        UpdateAvailStaff();
+
+        if (staffNeed > availStaff)
+            staffNeed = availStaff;
+
+        int n = 0; //number of Staff sent
+
+        for (int i = 0; i < workers.Count; i++)
+        {
+            if (workers[i].TargetStructure == null)
+            {
+                Worker w = workers[i].GetComponent<Worker>();
+                workers[i].TargetStructure = target;
+                workers[i].SetToWalk(target.transform.position);
+                f.AddStaffToFarm(w);
+                n++;
+            }
+
+            if (n >= staffNeed)
+                break;
+        }
+
+        UpdateAvailStaff();
+    }
+
+    public void CallStaff()
+    {
+        Office.instance.SendStaff(CurStructure);
+        MainUI.instance.UpdateResourceUI();
+    }
+
 
 
     // Start is called before the first frame update
