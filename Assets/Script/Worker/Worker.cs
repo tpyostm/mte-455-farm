@@ -144,5 +144,37 @@ public class Worker : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject != targetStructure)
+        {
+            return;
+        }
+
+        Farm farm = other.gameObject.GetComponent<Farm>();
+
+        if ((farm != null) && (farm.HP < 100))
+        {
+            switch (farm.Stage)
+            {
+                case FarmStage.plowing:
+                    state = UnitState.Plow;
+                    farm.CheckTimeForWork();
+                    break;
+                case FarmStage.sowing:
+                    state = UnitState.Sow;
+                    farm.CheckTimeForWork();
+                    break;
+                case FarmStage.maintaining:
+                    state = UnitState.Water;
+                    farm.CheckTimeForWork();
+                    break;
+                case FarmStage.harvesting:
+                    state = UnitState.Harvest;
+                    farm.CheckTimeForWork();
+                    break;
+            }
+        }
+    }
 }
 

@@ -131,18 +131,4 @@ public class Office : MonoBehaviour
         Office.instance.SendStaff(CurStructure);
         MainUI.instance.UpdateResourceUI();
     }
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
