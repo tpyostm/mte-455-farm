@@ -157,5 +157,9 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-
+    public void CallStaff()
+    {
+        Office.instance.SendStaff(CurStructure);
+        MainUI.instance.UpdateResourceUI();
+    }
 }

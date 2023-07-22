@@ -113,6 +113,7 @@ public class Office : MonoBehaviour
             if (workers[i].TargetStructure == null)
             {
                 Worker w = workers[i].GetComponent<Worker>();
+
                 workers[i].TargetStructure = target;
                 workers[i].SetToWalk(target.transform.position);
                 f.AddStaffToFarm(w);
@@ -126,9 +127,6 @@ public class Office : MonoBehaviour
         UpdateAvailStaff();
     }
 
-    public void CallStaff()
-    {
-        Office.instance.SendStaff(CurStructure);
-        MainUI.instance.UpdateResourceUI();
-    }
+
+
 }
