@@ -170,7 +170,7 @@ public class Worker : MonoBehaviour
                     break;
                 case FarmStage.maintaining:
                     state = UnitState.Water;
-                    EquipTool(3); // Watering Can
+                    EquipTool(2); // Watering Can
                     farm.CheckTimeForWork();
                     break;
                 case FarmStage.harvesting:
@@ -180,7 +180,7 @@ public class Worker : MonoBehaviour
             }
         }
     }
-    private void DisableAllTools()
+    public void DisableAllTools()
     {
         for (int i = 0; i < tools.Length; i++)
             tools[i].SetActive(false);
