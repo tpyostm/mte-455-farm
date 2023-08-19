@@ -32,6 +32,12 @@ public abstract class Structure : MonoBehaviour
     [SerializeField] private int id;
     public int ID { get { return id; } set { id = value; } }
 
+
+    [SerializeField] protected bool isHousing;
+    public bool IsHousing { get { return isHousing; } set { isHousing = value; } }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
