@@ -26,6 +26,14 @@ public class StructureManager : MonoBehaviour
 
     private Camera cam;
 
+    //Road
+    [Header("Road")]
+    [SerializeField] private GameObject roadGreenTilePrefab;
+    [SerializeField] private GameObject roadGreenTileParent;
+    [SerializeField] private Vector3 startRoadPos;
+    [SerializeField] private Vector3 endRoadPos;
+    [SerializeField] private List<GameObject> roadGreenTilesList = new List<GameObject>(); //list contains green tiles
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +62,9 @@ public class StructureManager : MonoBehaviour
         {
             gridPlane.SetActive(false);
         }
-        CheckLeftClick();  
+        CheckLeftClick();
+
+        CheckRoadMode();
 
     }
 
@@ -98,6 +108,9 @@ public class StructureManager : MonoBehaviour
 
     private void CheckLeftClick()
     {
+        if (buildingCursor != null && buildingCursor.tag == "Road")
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (isConstructing)
@@ -189,4 +202,125 @@ public class StructureManager : MonoBehaviour
         gridPlane.SetActive(isDemolishing);
         demolishCursor.SetActive(isDemolishing);
     }
+
+    private void GenGreenTile(Vector3 pos)
+    {
+        GameObject greenTileObj = Instantiate(roadGreenTilePrefab,
+                                                pos,
+                                                Quaternion.identity,
+                                                roadGreenTileParent.transform);
+
+        roadGreenTilesList.Add(greenTileObj);
+
+    }
+
+    private void ClearGreenTileList()
+    {
+        foreach (GameObject tileObj in roadGreenTilesList)
+            Destroy(tileObj);
+
+        roadGreenTilesList.Clear();
+    }
+
+    private List<Vector3> FindNewPath(Vector3 startPos, Vector3 endPos)
+    {
+        List<Vector3> path = new List<Vector3>();
+
+        int xTileNum = ((int)endRoadPos.x - (int)startRoadPos.x) / 5;
+        int zTileNum = ((int)endRoadPos.z - (int)startRoadPos.z) / 5;
+
+        int xModifier = xTileNum >= 0 ? 1 : -1;
+        int zModifier = zTileNum >= 0 ? 1 : -1;
+
+        path.Add(startPos);
+
+        for (int i = 1; i <= Mathf.Abs(xTileNum); i++)
+            path.Add(startPos + new Vector3(5f * i * xModifier, 0f, 0f));
+
+        Vector3 corner = path.Count > 1 ? path[path.Count - 1] :
+
+            startRoadPos;
+
+        for (int i = 1; i <= Mathf.Abs(zTileNum); i++)
+            path.Add(corner + new Vector3(0f, 0f, 5f * i * zModifier));
+
+        return path;
+    }
+
+    private void PlanningRoad()
+    {
+        curCursorPos = Formula.instance.GetCurTilePosition();
+
+        if (endRoadPos == curCursorPos)
+            return;
+
+        endRoadPos = curCursorPos;
+
+        //Finding Path
+        List<Vector3> newPath = FindNewPath(startRoadPos, endRoadPos);
+
+        ClearGreenTileList();
+
+        //Gen Green Tile
+        foreach (Vector3 pos in newPath)
+            GenGreenTile(pos);
+    }
+
+    private void ConstructRoad()
+    {
+        foreach (GameObject tileObj in roadGreenTilesList)
+        {
+            if (CheckMoney(curBuildingPrefab) == false) //Cancel if there is not enough money
+                CancelStructureMode();
+            else //enough money to construct road
+            {
+                GameObject roadObj = Instantiate(curBuildingPrefab, tileObj.transform.position,
+                                                       Quaternion.identity,
+                                                       buildingParent.transform);
+
+                Structure s = roadObj.GetComponent<Structure>();
+
+                //Add building in Office
+                Office.instance.AddBuilding(s);
+                //Deduct Money
+                DeductMoney(s.CostToBuild);
+            }
+        }
+        ClearGreenTileList();
+        CancelStructureMode();
+    }
+
+    private void CheckRoadMode()
+    {
+        if (buildingCursor == null || buildingCursor.tag != "Road")
+            return;
+
+        if (buildingCursor.GetComponent<FindBuildingSite>().CanBuild == false)
+            return;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        if (Input.GetMouseButtonDown(0)) //Start left click for road
+        {
+            isConstructing = true;
+            startRoadPos = curCursorPos;
+
+            roadGreenTilesList.Clear();
+
+            GameObject greenTileObj = Instantiate(roadGreenTilePrefab,
+                                                    startRoadPos,
+                                                    Quaternion.identity,
+                                                    roadGreenTileParent.transform);
+            roadGreenTilesList.Add(greenTileObj);
+        }
+
+        if (Input.GetMouseButton(0)) //keep holding left click
+            PlanningRoad();
+
+        if (Input.GetMouseButtonUp(0)) //release left mouse
+            ConstructRoad();
+    }
 }
+
+
