@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum UnitState
-{
-    Idle,
-    Walk,
-    Plow,
-    Sow,
-    Water,
-    Harvest
-}
 
 public enum Gender
 {
@@ -19,7 +10,7 @@ public enum Gender
     female
 }
 
-public class Worker : MonoBehaviour
+public class Worker : Unit
 {
     private int id;
     public int ID { get { return id; } set { id = value; } }
