@@ -32,11 +32,11 @@ public abstract class Structure : MonoBehaviour
     [SerializeField] private int id;
     public int ID { get { return id; } set { id = value; } }
 
-
     [SerializeField] protected bool isHousing;
     public bool IsHousing { get { return isHousing; } set { isHousing = value; } }
 
-
+    [SerializeField] protected bool isWarehouse;
+    public bool IsWarehouse { get { return isWarehouse; } set { isWarehouse = value; } }
 
     // Start is called before the first frame update
     void Start()

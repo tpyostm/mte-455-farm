@@ -93,15 +93,15 @@ public class Enemy : Unit
             targetStructure = null;
             state = UnitState.Idle;   
 
-        if (enemyUnit != null)
-        {
-            targetUnit = enemyUnit.gameObject;
-            state = UnitState.MoveToAttackUnit;
-        }
-        else
-        {
-            targetUnit = null;
-            state = UnitState.Idle;            
+            if (enemyUnit != null)
+            {
+                targetUnit = enemyUnit.gameObject;
+                state = UnitState.MoveToAttackUnit;
+            }
+            else
+            {
+                targetUnit = null;
+                state = UnitState.Idle;            
             }
         }
     }
