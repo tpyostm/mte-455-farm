@@ -15,7 +15,9 @@ public enum UnitState
     MoveToAttackUnit,
     AttackUnit,
     MoveToAttackBuilding,
-    AttackBuilding
+    AttackBuilding,
+    Mining,
+    Die
 }
 
 
@@ -44,11 +46,15 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected int attackPower = 5;
     public int AttackPower { get { return attackPower; } set { attackPower = value; } }
 
+    [SerializeField] protected GameObject targetUnit;
+    public GameObject TargetUnit { get { return targetUnit; } set { targetUnit = value; } }
+
     //Timer
     [SerializeField] protected float CheckStateTimer = 0f;
     [SerializeField] protected float CheckStateTimeWait = 0.5f;
 
     [SerializeField] protected GameObject[] tools;
+    [SerializeField] protected GameObject weapon;
 
     void Awake()
     {
@@ -91,6 +97,12 @@ public abstract class Unit : MonoBehaviour
                 break;
             case UnitState.AttackBuilding:
                 AttackBuilding();
+                break;
+            case UnitState.MoveToAttackUnit:
+                MoveToAttackUnit();
+                break;
+            case UnitState.AttackUnit:
+                AttackUnit();
                 break;
         }
     }
@@ -136,16 +148,97 @@ public abstract class Unit : MonoBehaviour
 
     protected void AttackBuilding()
     {
+        EquipWeapon();
+
+        if (navAgent != null)
         navAgent.isStopped = true;
 
         if (targetStructure != null)
 
         {
-            Building b = targetStructure.GetComponent<Building>();
+            LookAt(targetStructure.transform.position);
 
+            Building b = targetStructure.GetComponent<Building>();
             b.HP -= (int)attackPower;
         }
     }
+    protected void DisableWeapon()
+    {
+        weapon.SetActive(false);
+    }
+
+    protected void EquipWeapon()
+    {
+        weapon.SetActive(true);
+    }
+    // rotate to face the given position
+    protected void LookAt(Vector3 pos)
+    {
+        Vector3 dir = (pos - transform.position).normalized;
+        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+    protected void MoveToAttackUnit()
+    {
+        if (targetUnit == null)
+        {
+            state = UnitState.Idle;
+            navAgent.isStopped = true;
+            return;
+        }
+        else
+        {
+            navAgent.SetDestination(targetUnit.transform.position);
+            navAgent.isStopped = false;
+        }
+
+        distance = Vector3.Distance(transform.position, targetUnit.transform.position);
+
+        if (distance <= attackRange)
+            state = UnitState.AttackUnit;
+    }
+    protected void AttackUnit()
+    {
+        EquipWeapon();
+
+        if (navAgent != null)
+            navAgent.isStopped = true;
+
+        if (targetUnit != null)
+        {
+            LookAt(targetUnit.transform.position);
+
+            Unit u = targetUnit.GetComponent<Unit>();
+            u.TakeDamage(this);
+        }
+        else //No unit to attack
+        {
+            targetUnit = null;
+            state = UnitState.Idle;
+        }
+    }
+
+    public void CheckSelfDefence(Unit u)
+    {
+        if (u.gameObject != null)
+        {
+            targetUnit = u.gameObject;
+            state = UnitState.MoveToAttackUnit;
+        }
+    }
+    public void TakeDamage(Unit attacker)
+    {
+        CheckSelfDefence(attacker);
+
+        hp -= attacker.AttackPower;
+        if (hp <= 0)
+            Destroy(gameObject);
+    }
+
+
+
+
 }
 
 

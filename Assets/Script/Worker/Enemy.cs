@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemy : Unit
 {
     [SerializeField] private LayerMask buildingLayerMask;
+    [SerializeField] private LayerMask unitLayerMask;
 
     [SerializeField] float checkForEnemyRate = 1f;
 
@@ -13,6 +14,8 @@ public class Enemy : Unit
     void Start()
     {
         buildingLayerMask = LayerMask.GetMask("Building");
+        unitLayerMask = LayerMask.GetMask("Unit");
+
         InvokeRepeating("CheckForAttack", 0f, checkForEnemyRate);
     }
 
@@ -72,12 +75,68 @@ public class Enemy : Unit
     private void CheckForAttack()
     {
         Building enemyBuilding = CheckForNearestEnemyBuilding();
+        Unit enemyUnit = CheckForNearestEnemyUnit();
 
         if (enemyBuilding != null)
         {
             targetStructure = enemyBuilding.gameObject;
             state = UnitState.MoveToAttackBuilding;
         }
+        else
+        {
+            targetStructure = null;
+            state = UnitState.Idle;   
+
+        if (enemyUnit != null)
+        {
+            targetUnit = enemyUnit.gameObject;
+            state = UnitState.MoveToAttackUnit;
+        }
+        else
+        {
+            targetUnit = null;
+            state = UnitState.Idle;            
+            }
+        }
     }
+    protected Unit CheckForNearestEnemyUnit()
+    {
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position,
+                                                    detectRange,
+                                                    Vector3.up,
+                                                    unitLayerMask);
+
+        GameObject closest = null;
+        float closestDist = 0f;
+
+        for (int x = 0; x < hits.Length; x++)
+        {
+            // skip if this is not a player's unit
+            if (hits[x].collider.tag != "Unit")
+                continue;
+
+            Unit target = hits[x].collider.GetComponent<Unit>();
+            float dist = Vector3.Distance(transform.position, hits[x].transform.position);
+
+            // skip if this is not a unit
+            if (target == null)
+                continue;
+            // skip if it is any dead unit
+            if (target.HP <= 0)
+                continue;
+            // if the closest is null or the distance is less than the closest distance it currently has
+            else if ((closest == null) || (dist < closestDist))
+            {
+                closest = hits[x].collider.gameObject;
+                closestDist = dist;
+            }
+        }
+
+        if (closest != null)
+            return closest.GetComponent<Unit>();
+        else
+            return null;
+    }
+
 }
 

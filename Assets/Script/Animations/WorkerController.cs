@@ -49,6 +49,7 @@ public class WorkerController : MonoBehaviour
                 break;
             case UnitState.Mining:
                 anim.SetBool("isMining", true);
+                break;
             case UnitState.Die:
                 anim.SetBool("isDead", true);
                 break;
