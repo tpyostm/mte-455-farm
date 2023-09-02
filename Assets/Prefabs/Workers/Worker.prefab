@@ -1247,7 +1247,7 @@ MonoBehaviour:
   - {fileID: 5434906319697798855}
   - {fileID: 6721534150998389918}
   - {fileID: 6665913081411902880}
-  weapon: {fileID: 0}
+  weapon: {fileID: 1309244834713454, guid: 6060d8d85191b494b87b58c29076f5e9, type: 3}
   charSkinID: 0
   charSkin:
   - {fileID: 1719133026623802}

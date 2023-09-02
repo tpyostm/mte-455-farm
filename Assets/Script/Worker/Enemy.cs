@@ -74,8 +74,14 @@ public class Enemy : Unit
 
     private void CheckForAttack()
     {
-        Building enemyBuilding = CheckForNearestEnemyBuilding();
-        Unit enemyUnit = CheckForNearestEnemyUnit();
+        Building enemyBuilding = FindingTarget.CheckForNearestEnemyBuilding(transform.position,
+                                                                            detectRange,
+                                                                            buildingLayerMask,
+                                                                            "Building");
+        Unit enemyUnit = FindingTarget.CheckForNearestEnemyUnit(transform.position, 
+                                                  detectRange,
+                                                  buildingLayerMask,
+                                                  "Unit");
 
         if (enemyBuilding != null)
         {

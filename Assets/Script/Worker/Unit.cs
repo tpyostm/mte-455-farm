@@ -179,24 +179,23 @@ public abstract class Unit : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
-    protected void MoveToAttackUnit()
+  
+    public void CheckSelfDefence(Unit u)
     {
-        if (targetUnit == null)
+        if (u.gameObject != null)
         {
-            state = UnitState.Idle;
-            navAgent.isStopped = true;
-            return;
+            targetUnit = u.gameObject;
+            state = UnitState.MoveToAttackUnit;
         }
-        else
+    }
+
+    public void CheckSelfDefence(Turret t)
+    {
+        if (t.gameObject != null)
         {
-            navAgent.SetDestination(targetUnit.transform.position);
-            navAgent.isStopped = false;
+            targetUnit = t.gameObject;
+            state = UnitState.MoveToAttackUnit;
         }
-
-        distance = Vector3.Distance(transform.position, targetUnit.transform.position);
-
-        if (distance <= attackRange)
-            state = UnitState.AttackUnit;
     }
     protected void AttackUnit()
     {
@@ -218,15 +217,35 @@ public abstract class Unit : MonoBehaviour
             state = UnitState.Idle;
         }
     }
-
-    public void CheckSelfDefence(Unit u)
+    protected void MoveToAttackUnit()
     {
-        if (u.gameObject != null)
+        if (targetUnit == null)
         {
-            targetUnit = u.gameObject;
-            state = UnitState.MoveToAttackUnit;
+            state = UnitState.Idle;
+            navAgent.isStopped = true;
+            return;
         }
+        else
+        {
+            navAgent.SetDestination(targetUnit.transform.position);
+            navAgent.isStopped = false;
+        }
+
+        distance = Vector3.Distance(transform.position, targetUnit.transform.position);
+
+        if (distance <= attackRange)
+            state = UnitState.AttackUnit;
     }
+
+    public void TakeDamage(Turret attacker)
+    {
+        CheckSelfDefence(attacker);
+
+        hp -= attacker.ShootDamage;
+        if (hp <= 0)
+            Destroy(gameObject);
+    }
+
     public void TakeDamage(Unit attacker)
     {
         CheckSelfDefence(attacker);
@@ -235,10 +254,6 @@ public abstract class Unit : MonoBehaviour
         if (hp <= 0)
             Destroy(gameObject);
     }
-
-
-
-
 }
 
 
