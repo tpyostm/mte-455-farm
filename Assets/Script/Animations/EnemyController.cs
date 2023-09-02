@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkerController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     private Animator anim;
-    private Worker worker;
+    private Enemy enemy;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-        worker = GetComponent<Worker>();
+        enemy = GetComponent<Enemy>();
     }
 
     // Update is called once per frame
@@ -23,32 +23,22 @@ public class WorkerController : MonoBehaviour
     private void CheckState()
     {
         DisableAll();
-        switch (worker.State)
+        switch (enemy.State)
+
         {
             case UnitState.Idle:
                 anim.SetBool("isIdle", true);
                 break;
             case UnitState.Walk:
+            case UnitState.MoveToAttackBuilding:
+            case UnitState.MoveToAttackUnit:
                 anim.SetBool("isWalk", true);
                 break;
-            case UnitState.Plow:
-                anim.SetBool("isPlow", true);
-                break;
-            case UnitState.Sow:
-                anim.SetBool("isSow", true);
-                break;
-            case UnitState.Water:
-                anim.SetBool("isWater", true);
-                break;
-            case UnitState.Harvest:
-                anim.SetBool("isHarvest", true);
-                break;
             case UnitState.AttackBuilding:
-            case UnitState.AttackUnit:
                 anim.SetBool("isAttack", true);
                 break;
-            case UnitState.Mining:
-                anim.SetBool("isMining", true);
+            case UnitState.AttackUnit:
+                anim.SetBool("isAttack", true);
                 break;
             case UnitState.Die:
                 anim.SetBool("isDead", true);
@@ -64,5 +54,7 @@ public class WorkerController : MonoBehaviour
         anim.SetBool("isSow", false);
         anim.SetBool("isWater", false);
         anim.SetBool("isHarvest", false);
+        anim.SetBool("isAttack", false);
     }
 }
+
