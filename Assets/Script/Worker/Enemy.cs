@@ -86,7 +86,8 @@ public class Enemy : Unit
         if (enemyBuilding != null)
         {
             targetStructure = enemyBuilding.gameObject;
-            state = UnitState.MoveToAttackBuilding;
+            SetUnitState(UnitState.AttackBuilding);
+
         }
         else
         {
@@ -96,11 +97,11 @@ public class Enemy : Unit
             if (enemyUnit != null)
             {
                 targetUnit = enemyUnit.gameObject;
-                state = UnitState.MoveToAttackUnit;
+                SetUnitState(UnitState.AttackBuilding);
             }
             else
             {
-                targetUnit = null;
+                targetStructure = null;
                 state = UnitState.Idle;            
             }
         }

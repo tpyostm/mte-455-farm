@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public enum UnitState
 {
@@ -15,6 +16,9 @@ public enum UnitState
     MoveToAttackUnit,
     AttackUnit,
     MoveToAttackBuilding,
+    MoveToMining,
+    MoveToDeliver,
+    Deliver,
     AttackBuilding,
     Mining,
     Die
@@ -56,6 +60,8 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected GameObject[] tools;
     [SerializeField] protected GameObject weapon;
 
+    public UnityEvent<UnitState> onStateChange;
+
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
@@ -69,7 +75,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         CheckStaffState();
     }
@@ -159,7 +165,7 @@ public abstract class Unit : MonoBehaviour
             LookAt(targetStructure.transform.position);
 
             Building b = targetStructure.GetComponent<Building>();
-            b.HP -= (int)attackPower;
+            b.TakeDamage(attackPower);
         }
     }
     protected void DisableWeapon()
@@ -254,6 +260,15 @@ public abstract class Unit : MonoBehaviour
         if (hp <= 0)
             Destroy(gameObject);
     }
+
+    public void SetUnitState(UnitState s)
+    {
+        if (onStateChange != null) //if there is an icon
+            onStateChange.Invoke(s);
+
+        state = s;
+    }
+
 }
 
 

@@ -332,6 +332,16 @@ public class StructureManager : MonoBehaviour
         MainUI.instance.WarehouseNameText.text = name;
         MainUI.instance.ToggleWarehousePanel();
     }
+    public void CallWorker() //Call Worker in Warehouse Panel
+    {
+        GameObject mine = FindingTarget.CheckForNearestMine(CurStructure.transform.
+                                                                        position,
+                                                                        100f,
+                                                                        "Mine");
+        Office.instance.SendWorkerToMine(mine, CurStructure);
+        MainUI.instance.UpdateResourceUI();
+    }
+
 }
 
 
