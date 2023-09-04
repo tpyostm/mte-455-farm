@@ -22,6 +22,12 @@ public class MainUI : MonoBehaviour
     public TMP_Text FarmNameText
     { get { return farmNameText; } set { farmNameText = value; } }
 
+    public GameObject warehousePanel;
+
+    [SerializeField] private TMP_Text warehouseNameText;
+    public TMP_Text WarehouseNameText { get { return warehouseNameText; } set { warehouseNameText = value; } }
+
+
     public static MainUI instance;
 
     // Start is called before the first frame update
@@ -58,6 +64,16 @@ public class MainUI : MonoBehaviour
         else
             farmPanel.SetActive(false);
     }
+
+    public void ToggleWarehousePanel()
+    {
+        if (!warehousePanel.activeInHierarchy)
+            warehousePanel.SetActive(true);
+        else
+            warehousePanel.SetActive(false);
+    }
+
+
 
 
 }
