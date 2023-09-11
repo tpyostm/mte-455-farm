@@ -97,7 +97,7 @@ public class Enemy : Unit
             if (enemyUnit != null)
             {
                 targetUnit = enemyUnit.gameObject;
-                SetUnitState(UnitState.AttackBuilding);
+                //SetUnitState(UnitState.AttackBuilding);
             }
             else
             {
