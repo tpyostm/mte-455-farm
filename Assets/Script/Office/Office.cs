@@ -23,6 +23,9 @@ public class Office : MonoBehaviour
     public int Apple { get { return apple; } set { apple = value; } }
     [SerializeField] private int stone;
     public int Stone { get { return stone; } set { stone = value; } }
+    
+    [SerializeField] private int wood;
+    public int Wood { get { return wood; } set { wood = value; } }
 
 
 
