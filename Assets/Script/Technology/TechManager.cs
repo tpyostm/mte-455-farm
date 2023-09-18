@@ -67,4 +67,20 @@ public class TechManager : MonoBehaviour
                 t.ReduceResearchDay();
         }
     }
+    public int CheckTechBonus(int i)
+    {
+        int bonus = 0;
+
+        if (techSet[i].State != TechState.Completed)
+            return 0;
+
+        switch(i)
+        {
+            case 1: bonus = 150; 
+                break;
+            case 2: bonus = 250;
+                break;
+        }   
+        return bonus;
+    }
 }
